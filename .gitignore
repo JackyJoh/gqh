@@ -1,0 +1,24 @@
+# secrets: keys live in .env only (template: .env.example)
+.env
+.env.*
+!.env.example
+
+# licensed market data + API caches: never commit (re-download with data/download.py)
+data/*
+!data/download.py
+.massive_cache/
+
+# python / tooling
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.tar.gz.part*
+.claude/
+.vscode/
+.idea/

@@ -1,0 +1,90 @@
+IN-SAMPLE BACKTEST  2010-01-04 .. 2024-10-02  (3,712 sessions)
+data from 2008-12-01; first ranking 2009-12-31 uses a full 252-session window; avg stocks held 24.9
+TABLE 1 (in-sample rows)
+                                         $100k ->     total   CAGR    vol Sharpe Sortino  max DD worst day worst month best month positive months
+Top 5% @2 bps/side                  $1,746,183.79  +1646.2%  21.4%  19.3%   1.10    1.28  -36.5%    -12.1%      -14.3%     +22.7%             67%
+Top 5% @4 bps/side (costs doubled)    $395,884.64   +295.9%   9.8%  19.3%   0.58    0.68  -51.3%    -12.1%      -15.1%     +21.7%             56%
+SPY buy & hold (no dividends)         $510,463.03   +410.5%  11.7%  17.2%   0.73    0.90  -34.1%    -10.9%      -13.0%     +12.7%             67%
+
+return by year @2 bps: 2010: +53%  2011: +28%  2012: +28%  2013: +39%  2014: +37%  2015: -3%  2016: -3%  2017: +31%  2018: +16%  2019: +10%  2020: +49%  2021: +34%  2022: -19%  2023: +7%  2024 (Jan-Oct 2): +32%   -> 12 of 15 years positive
+turnover: the whole book is bought at every close and sold at every open = ~504x capital per year; cost drag at 2 bps/side = 10.1%/yr
+
+TABLE 2  cutoffs (2 bps/side)
+         avg stocks  gross overnight %/yr  CAGR %  Sharpe  max DD %     $100k ->  Sharpe @4bp
+top 1%         5.00                 44.53   35.48    1.21    -33.77 8,759,587.55         0.86
+top 2%        10.00                 38.12   28.78    1.20    -42.12 4,149,633.16         0.77
+top 3%        15.00                 33.55   23.47    1.08    -45.91 2,232,867.69         0.62
+top 5%        24.94                 31.39   21.43    1.10    -36.54 1,746,183.79         0.58
+top 10%       49.62                 26.59   16.29    0.99    -32.62   923,707.45         0.38
+
+WALK-FORWARD 2012-01 .. 2024-10 (each year: the cutoff with the best Sharpe on all prior years)
+picks: 2012:top 1%  2013:top 1%  2014:top 1%  2015:top 1%  2016:top 1%  2017:top 1%  2018:top 1%  2019:top 1%  2020:top 1%  2021:top 2%  2022:top 1%  2023:top 1%  2024:top 1%
+                CAGR %  Sharpe  max DD %     $100k ->
+walk-forward     27.32    1.03    -35.17 2,163,904.64
+fixed top 1%     30.25    1.06    -33.77 2,891,065.50
+fixed top 2%     25.18    1.08    -42.12 1,743,775.00
+fixed top 3%     19.97    0.95    -45.91 1,015,580.75
+fixed top 5%     18.73    0.99    -36.54   889,246.15
+fixed top 10%    14.11    0.89    -32.62   536,975.63
+SPY buy & hold   12.61    0.80    -34.10   453,274.90
+
+ROBUSTNESS @2 bps, 2011-07-01 .. 2024-10-02 (rows: ranking window, cols: re-ranking; locked = 12m monthly)
+
+Sharpe
+rerank  daily  weekly  monthly
+window                        
+1m       0.45    0.43     0.56
+3m       0.70    0.70     0.78
+6m       0.92    0.91     0.94
+12m      1.06    1.01     0.98
+24m      0.80    0.81     0.83
+
+CAGR %
+rerank  daily  weekly  monthly
+window                        
+1m       6.72    6.33     8.59
+3m      12.23   12.41    13.96
+6m      17.06   16.93    17.31
+12m     20.50   19.24    18.66
+24m     14.91   15.21    15.67
+
+max DD %
+rerank  daily  weekly  monthly
+window                        
+1m     -50.64  -49.13   -48.79
+3m     -50.83  -51.27   -49.85
+6m     -42.05  -41.84   -40.93
+12m    -35.35  -36.09   -36.54
+24m    -48.45  -48.47   -47.33
+
+RISK (top 5% @2 bps)
+beta to SPY daily (close to close): 0.61
+beta to SPY overnight (close to open): 1.45
+SPY-overnight-hedged Sharpe (full-period beta, hedge costs not included): 1.03
+Sharpe 2010 - 2018: 1.49   Sharpe 2019 - Oct 2024: 0.78
+skew of daily returns: -1.03
+
+HYPOTHESIS CHECK: month-end deciles by trailing 12-month overnight return, held the next month (gross)
+        overnight %/yr  intraday %/yr  close-to-close %/yr
+decile                                                    
+1                -0.2%         +10.1%                +9.9%
+2                +1.4%         +11.2%               +12.7%
+3                +4.3%          +7.5%               +11.7%
+4                +4.4%          +6.2%               +10.6%
+5                +6.3%          +4.6%               +11.0%
+6                +8.3%          +3.3%               +11.6%
+7                +9.7%          +2.1%               +11.9%
+8               +12.4%          -0.6%               +11.8%
+9               +15.8%          -5.5%               +10.3%
+10              +26.6%         -14.1%               +12.5%
+
+EXECUTION CHECK (every 5th session 2015-01 .. 2024-10, split nights removed; returns gross of costs)
+        positions  daily-bar bps/night  auction bps/night  break-even bps/side  auction Sharpe @2bp  close spread bps  open spread bps  ask->bid bps/night
+top 1%      2,405                15.65              16.77                 8.38                 1.05              6.57            27.12               -9.29
+top 2%      4,824                15.69              17.14                 8.57                 1.34              5.81            25.44               -1.63
+top 3%      7,237                13.75              15.07                 7.54                 1.18              5.42            24.74               -6.78
+top 5%     12,001                14.07              15.28                 7.64                 1.40              4.81            25.00               -7.39
+top 10%    23,758                10.55              11.31                 5.66                 1.08              4.23            25.69               -9.57
+top 5% (12,001 positions): 15.3 bps/night at official auction prices vs 14.1 with daily bars -> the backtest prices are not flattering
+auction Sharpe @2 bps/side 1.40; break-even cost 7.6 bps/side = 3.8x the 2 bps assumed
+median quoted spread 4.8 bps near the close, 25.0 bps at the open; buying the ask and selling the bid instead earns -7.4 bps/night -> auctions are required
