@@ -8,6 +8,8 @@ Based on Lou, Polk & Skouras (2019), *A tug of war: overnight versus intraday ex
 
 ## Reproduce the results
 
+> **Data download required:** Market data is not included in this repo. Download it directly from Massive using your own API key: set `MASSIVE_API_KEY` in `.env`, then run `python data/download.py`. Your key must have access to the required endpoints. Downloads stay local in `data/cache/`.
+
 **1. Install** (Python 3.11+; tested on 3.13.7)
 ```bash
 pip install -r requirements.txt
